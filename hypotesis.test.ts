@@ -109,6 +109,7 @@ describe('=> WithdrawHook', () => {
       await setNextTimestamp(ethers.provider, previousResetTimestamp + TEST_GLOBAL_PERIOD_LENGTH+1)
       //after time period it can be seen that global limit and user limit is not working and u can withdraw exceeded amount and block others right to withdraw in this time period.
       await withdrawHook.connect(collateralSigner).hook(user.address,EXCEEDED_BEFORE_AMOUNT,EXCEEDED_BEFORE_AMOUNT)
+      // due to there is only one account that withdraw money it show obviously that with this vulnarability anyboody who first withdraw in new time period can exceed user or global limit.
      expect(parseInt((await withdrawHook.getGlobalWithdrawLimitPerPeriod())._hex)).lessThan(parseInt((await withdrawHook.getGlobalAmountWithdrawnThisPeriod())._hex))
      
     })
